@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>今日简报 · 2026年11月18日 周三</title>
+<style>
+:root{--bg:#0c0e12;--card:#14171d;--card-2:#191d24;--line:rgba(255,255,255,.075);
+--txt:#e9edf2;--dim:#8b95a5;--accent:#ff7a45;--up:#4ade80;--down:#f87171;--blue:#7dd3fc}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;padding:28px 20px 64px}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:22px}
+h1{font-size:27px;font-weight:700;letter-spacing:.3px}
+h1 .accent{color:var(--accent)}
+.sub{color:var(--dim);font-size:13px;margin-top:5px}
+.pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:7px;animation:p 2s infinite}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.25}}
+.live{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--up);border:1px solid rgba(74,222,128,.3);border-radius:20px;padding:2px 9px;margin-left:8px}
+.live .dot{width:5px;height:5px;border-radius:50%;background:var(--up)}
+.live.off{color:var(--dim);border-color:var(--line)}
+.live.off .dot{background:var(--dim)}
+.hero{background:linear-gradient(135deg,#1b1f28,#15181f);border:1px solid var(--line);border-radius:18px;padding:26px 28px;margin-bottom:20px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-70px;top:-70px;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,69,.16),transparent 70%)}
+.hero-main{display:flex;gap:38px;flex-wrap:wrap;position:relative;z-index:1}
+.hero-left{min-width:210px}
+.hero-right{flex:1;min-width:280px}
+.city{font-size:16px;font-weight:600;letter-spacing:.5px}
+.wx-desc{color:var(--dim);font-weight:400;font-size:13px;margin-left:6px}
+.temp{font-size:62px;font-weight:200;line-height:1.05;margin:4px 0 6px;letter-spacing:-2px}
+.deg{font-size:24px;color:var(--dim);margin-left:3px;vertical-align:super}
+.hero-meta{color:var(--dim);font-size:13px}
+.outfit-label{font-size:11px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:7px}
+.outfit{font-size:15px;line-height:1.75;color:#d8dee8}
+.chart{margin-top:14px}
+.chart-axis{display:flex;justify-content:space-between;color:var(--dim);font-size:11px;margin-top:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.wide-stack{display:flex;flex-direction:column;gap:18px;margin-top:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+.card-wide{grid-column:1/-1}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.card-head h2{font-size:15px;font-weight:600;letter-spacing:.4px}
+.tag{font-size:11px;color:var(--dim);border:1px solid var(--line);border-radius:20px;padding:2px 9px}
+.tag-new{color:#0c0e12;background:var(--accent);border-color:var(--accent);font-weight:600}
+.tag-dim{color:var(--dim)}
+.empty{color:var(--dim);font-size:13px;padding:10px 0}
+ol.hot-list{list-style:none}
+ol.hot-list li{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.035)}
+ol.hot-list li:last-child{border-bottom:none}
+.rank{min-width:20px;height:20px;border-radius:6px;background:var(--card-2);color:var(--dim);font-size:11px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
+ol.hot-list li:nth-child(-n+3) .rank{background:rgba(255,122,69,.16);color:var(--accent);font-weight:600}
+.hl{flex:1;color:var(--txt);text-decoration:none;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hl:hover{color:var(--accent)}
+.heat{font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums;white-space:nowrap}
+.news-item{padding:11px 0;border-bottom:1px solid rgba(255,255,255,.045)}
+.news-item:last-child{border-bottom:none}
+.n-title{color:var(--txt);text-decoration:none;font-size:14.5px;font-weight:500;display:block}
+.n-title:hover{color:var(--accent)}
+.comment{color:#a8b3c4;font-size:13px;margin-top:5px;padding-left:11px;border-left:2px solid rgba(255,122,69,.4)}
+.meta{margin-top:6px;display:flex;gap:12px;font-size:11.5px;color:var(--dim)}
+.meta-src{color:#6f7b8c}
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:9px;margin-bottom:16px}
+.quote{background:var(--card-2);border-radius:11px;padding:9px 11px;display:flex;flex-direction:column;gap:1px}
+.q-name{font-size:11.5px;color:var(--dim)}
+.q-val{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+.q-pct{font-size:11.5px;font-variant-numeric:tabular-nums}
+.up .q-pct{color:var(--up)}.down .q-pct{color:var(--down)}.flat .q-pct{color:var(--dim)}
+.memo textarea{width:100%;min-height:170px;background:var(--card-2);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:13px 15px;font-family:inherit;font-size:14px;line-height:1.75;resize:vertical;flex:1}
+.memo{display:flex;flex-direction:column}
+.memo textarea:focus{outline:none;border-color:rgba(255,122,69,.5)}
+.memo-bar{display:flex;justify-content:space-between;align-items:center;margin-top:9px;gap:10px;flex-wrap:wrap}
+.memo-status{color:var(--dim);font-size:11.5px}
+.btn{background:var(--card-2);color:var(--dim);border:1px solid var(--line);border-radius:9px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:inherit;transition:.15s}
+.btn:hover{color:var(--accent);border-color:rgba(255,122,69,.4)}
+.btn.on{color:#0c0e12;background:var(--accent);border-color:var(--accent);font-weight:600}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.keyinput{flex:1;min-width:240px;background:var(--card-2);color:var(--txt);border:1px solid var(--line);border-radius:9px;padding:6px 12px;font-size:12px;font-family:inherit}
+.keyinput:focus{outline:none;border-color:rgba(255,122,69,.5)}
+footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);color:#5d6878;font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media (max-width:620px){body{padding:18px 13px 40px}.temp{font-size:50px}.hero{padding:20px}.hero-main{gap:18px}.card{padding:17px 16px}.hl{white-space:normal}}
+</style></head>
+<body><div class="wrap">
+<header class="top">
+  <div><h1><span class="accent">●</span> 今日简报</h1>
+    <div class="sub">2026年11月18日 周三 · 更新于 18:03</div></div>
+  <div class="sub"><span class="pulse"></span>每日 06:00 / 12:00 / 18:00 自动刷新
+    <span class="live off" id="live-flag"><span class="dot"></span><span id="live-text">连接中</span></span></div>
+</header>
+
+<section class="hero"><div class="hero-main">
+  <div class="hero-left">
+    <div class="city">上海 <span class="wx-desc">小毛毛雨</span></div>
+    <div class="temp">11<span class="deg">°C</span></div>
+    <div class="hero-meta">体感 9° · 湿度 67% ·
+      7~15° · 降水概率 93%</div>
+  </div>
+  <div class="hero-right">
+    <div class="outfit-label">今日穿着建议</div>
+    <p class="outfit" data-editorial="1">上海今天多云转小毛毛雨，午后最高14.9°C、傍晚回落到11°C，降水概率93%，体感只剩8.9°C，湿度67%又潮。建议棉质风衣内搭薄针织，鞋子换成防水款替代麂皮，白天别急着脱外套，夜里加一件轻羽绒也不过分。</p>
+    <div class="chart"><svg viewBox="0 0 320 54" preserveAspectRatio="none" width="100%" height="54"><polygon points="0,54 0.0,15.5 13.9,16.1 27.8,16.6 41.7,20.2 55.7,20.8 69.6,22.6 83.5,25.5 97.4,26.7 111.3,22.6 125.2,16.6 139.1,11.3 153.0,7.8 167.0,6.0 180.9,6.6 194.8,10.7 208.7,12.5 222.6,16.1 236.5,22.6 250.4,26.7 264.3,29.7 278.3,34.4 292.2,38.5 306.1,43.9 320.0,48.0 320,54" fill="url(#g1)"/><polyline points="0.0,15.5 13.9,16.1 27.8,16.6 41.7,20.2 55.7,20.8 69.6,22.6 83.5,25.5 97.4,26.7 111.3,22.6 125.2,16.6 139.1,11.3 153.0,7.8 167.0,6.0 180.9,6.6 194.8,10.7 208.7,12.5 222.6,16.1 236.5,22.6 250.4,26.7 264.3,29.7 278.3,34.4 292.2,38.5 306.1,43.9 320.0,48.0" fill="none" stroke="#ff7a45" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><circle cx="0.0" cy="15.5" r="2.4" fill="#7dd3fc" /><circle cx="13.9" cy="16.1" r="2.4" fill="#7dd3fc" /><circle cx="27.8" cy="16.6" r="2.4" fill="#7dd3fc" /><circle cx="41.7" cy="20.2" r="2.4" fill="#7dd3fc" /><circle cx="55.7" cy="20.8" r="2.4" fill="#7dd3fc" /><circle cx="69.6" cy="22.6" r="2.4" fill="#7dd3fc" /><circle cx="83.5" cy="25.5" r="2.4" fill="#7dd3fc" /><circle cx="97.4" cy="26.7" r="2.4" fill="#ff7a45" /><circle cx="111.3" cy="22.6" r="2.4" fill="#7dd3fc" /><circle cx="125.2" cy="16.6" r="2.4" fill="#ff7a45" /><circle cx="139.1" cy="11.3" r="2.4" fill="#7dd3fc" /><circle cx="153.0" cy="7.8" r="2.4" fill="#ff7a45" /><circle cx="167.0" cy="6.0" r="2.4" fill="#7dd3fc" /><circle cx="180.9" cy="6.6" r="2.4" fill="#7dd3fc" /><circle cx="194.8" cy="10.7" r="2.4" fill="#7dd3fc" /><circle cx="208.7" cy="12.5" r="2.4" fill="#ff7a45" /><circle cx="222.6" cy="16.1" r="2.4" fill="#ff7a45" /><circle cx="236.5" cy="22.6" r="2.4" fill="#ff7a45" /><circle cx="250.4" cy="26.7" r="2.4" fill="#ff7a45" /><circle cx="264.3" cy="29.7" r="2.4" fill="#ff7a45" /><circle cx="278.3" cy="34.4" r="2.4" fill="#ff7a45" /><circle cx="292.2" cy="38.5" r="2.4" fill="#ff7a45" /><circle cx="306.1" cy="43.9" r="2.4" fill="#ff7a45" /><circle cx="320.0" cy="48.0" r="2.4" fill="#ff7a45" /><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff7a45" stop-opacity=".35"/><stop offset="100%" stop-color="#ff7a45" stop-opacity="0"/></linearGradient></defs></svg><div class="chart-axis"><span>00:00</span><span>23:00</span></div></div>
+  </div>
+</div></section>
+<div class="toolbar"></div>
+<div class="grid"><section class="card" data-hot="weibo"><header class="card-head"><h2>微博热搜</h2><span class="tag tag-dim">TOP 12</span></header><ol class="hot-list"><li><span class="rank">1</span><a class="hl" href="https://s.weibo.com/weibo?q=APEC" target="_blank" rel="noopener">APEC</a><span class="heat">114.0万</span><span class="tag tag-new">新</span></li><li><span class="rank">2</span><a class="hl" href="https://s.weibo.com/weibo?q=%E6%B7%B1%E5%9C%B3%E4%BA%BA%E5%85%A8%E5%A6%86%E5%87%BA%E8%A1%97%E8%BF%8EAPEC" target="_blank" rel="noopener">深圳人全妆出街迎APEC</a><span class="heat">83.7万</span><span class="tag ">–</span></li><li><span class="rank">3</span><a class="hl" href="https://s.weibo.com/weibo?q=APEC%E4%B8%AD%E5%9B%BD%E5%B9%B4%E8%BF%99%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9%E4%B8%8D%E5%AE%B9%E9%94%99%E8%BF%87" target="_blank" rel="noopener">APEC中国年这些知识点不容错过</a><span class="heat">67.8万</span><span class="tag tag-new">新</span></li><li><span class="rank">4</span><a class="hl" href="https://s.weibo.com/weibo?q=%E7%8E%8B%E6%A5%9A%E9%92%A6%E5%AD%99%E9%A2%96%E8%8E%8E%E6%80%BB%E5%86%B3%E8%B5%9B%E6%B7%B7%E5%8F%8C%E5%A4%96%E5%8D%A1" target="_blank" rel="noopener">王楚钦孙颖莎总决赛混双外卡</a><span class="heat">50.3万</span><span class="tag tag-new">新</span></li><li><span class="rank">5</span><a class="hl" href="https://s.weibo.com/weibo?q=%E6%B7%B1%E5%9C%B3%E6%9C%BA%E5%9C%BA%E6%88%90%E4%BA%86APEC%E9%9A%8F%E8%A1%8C%E5%9B%A2%E6%89%93%E5%8D%A1%E7%82%B9" target="_blank" rel="noopener">深圳机场成了APEC随行团打卡点</a><span class="heat">34.8万</span><span class="tag tag-new">新</span></li><li><span class="rank">6</span><a class="hl" href="https://s.weibo.com/weibo?q=%E4%B8%A4%E4%BA%AC%E5%8D%81%E4%BA%94%E6%97%A5" target="_blank" rel="noopener">两京十五日</a><span class="heat">33.6万</span><span class="tag tag-new">新</span></li><li><span class="rank">7</span><a class="hl" href="https://s.weibo.com/weibo?q=%E8%B5%B5%E6%9C%AC%E5%B1%B1%E6%85%8C%E5%95%A5%E5%AD%90%E5%98%9B%E6%8E%A5%E4%BD%8F%E4%B8%80%E4%BB%A3%E4%BA%BA%E7%84%A6%E8%99%91" target="_blank" rel="noopener">赵本山慌啥子嘛接住一代人焦虑</a><span class="heat">33.3万</span><span class="tag tag-new">新</span></li><li><span class="rank">8</span><a class="hl" href="https://s.weibo.com/weibo?q=APEC%E5%90%88%E5%BD%B1" target="_blank" rel="noopener">APEC合影</a><span class="heat">32.0万</span><span class="tag tag-new">新</span></li><li><span class="rank">9</span><a class="hl" href="https://s.weibo.com/weibo?q=%E6%9D%8E%E5%9C%A8%E6%98%8E%E5%A4%AB%E5%A6%87%E5%90%91%E4%B8%AD%E6%96%B9%E8%BF%8E%E5%AE%BE%E4%BA%BA%E5%91%98%E9%BC%93%E6%8E%8C%E8%87%B4%E6%84%8F" target="_blank" rel="noopener">李在明夫妇向中方迎宾人员鼓掌致意</a><span class="heat">30.8万</span><span class="tag tag-new">新</span></li><li><span class="rank">10</span><a class="hl" href="https://s.weibo.com/weibo?q=%E5%AE%9D%E7%8F%A0" target="_blank" rel="noopener">宝珠</a><span class="heat">29.8万</span><span class="tag tag-new">新</span></li><li><span class="rank">11</span><a class="hl" href="https://s.weibo.com/weibo?q=%E9%99%86%E6%AF%85%E5%A5%B3%E5%84%BF%E8%B4%9D%E5%84%BF%E6%AD%A3%E5%BC%8F%E5%87%BA%E9%81%93" target="_blank" rel="noopener">陆毅女儿贝儿正式出道</a><span class="heat">29.7万</span><span class="tag tag-new">新</span></li><li><span class="rank">12</span><a class="hl" href="https://s.weibo.com/weibo?q=%E6%B8%B8%E5%AE%A2%E6%9B%9D1600%E7%9A%84%E7%83%A4%E5%85%A8%E7%BE%8A%E5%89%A5%E4%B8%8D%E5%87%BA1%E4%B8%A4%E8%82%89" target="_blank" rel="noopener">游客曝1600的烤全羊剥不出1两肉</a><span class="heat">29.6万</span><span class="tag tag-new">新</span></li></ol></section><section class="card" data-hot="xiaohongshu"><header class="card-head"><h2>小红书热帖</h2><span class="tag tag-dim">TOP 12</span></header><ol class="hot-list"><li><span class="rank">1</span><a class="hl" href="https://www.xiaohongshu.com/search_result?keyword=%E7%94%A8AI%E5%8F%96%E4%BB%A3%E4%BC%A4%E5%AE%B3%E5%8A%A8%E7%89%A9%E7%9A%84%E6%8B%8D%E6%91%84" target="_blank" rel="noopener">用AI取代伤害动物的拍摄</a><span class="heat">2084.1万</span><span class="tag tag-new">新</span></li><li><span class="rank">2</span><a class="hl" href="https://www.xiaohongshu.com/search_result?keyword=%E5%9F%83%E5%8F%8A%E6%B3%95%E8%80%81%E9%9B%AA%E7%B3%95%E5%A4%AA%E7%8B%AC%E7%89%B9" target="_blank" rel="noopener">埃及法老雪糕太独特</a><span class="heat">2077.5万</span><span class="tag ">–</span></li><li><span class="rank">3</span><a class="hl" href="https://www.xiaohongshu.com/search_result?keyword=%E5%92%8C%E5%A5%BD%E6%9C%8B%E5%8F%8B%E5%87%BA%E6%9D%A5%E7%8E%A9%E6%B2%A1%E5%BF%85%E8%A6%81%E5%A4%AA%E6%AD%A3%E5%B8%B8" target="_blank" rel="noopener">和好朋友出来玩没必要太正常</a><span class="heat">2033.4万</span><span class="tag ">▲ 1</span></li><li><span class="rank">4</span><a class="hl" href="https://www.xiaohongshu.com/search_result?keyword=%E9%83%91%E7%A7%80%E5%A6%8D%E7%83%9F%E5%8F%B0%E6%89%93%E5%8D%A1%E8%8B%B9%E6%9E%9C%E5%89%AA%E7%BA%B8" target="_blank" rel="noopener">郑秀妍烟台打卡苹果剪纸</a><span class="heat">1999.7万</span><span class="tag ">▲ 2</span></li><li><span class="rank">5</span><a class="hl" href="https://www.xiaohongshu.com/search_result?keyword=%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E8%87%AA%E5%88%B6%E8%8B%B9%E6%9E%9C%E7%B3%96" target="_blank" rel="noopener">手把手教你自制苹果糖</a><span class="heat">1942.0万</span><span class="tag ">▲ 4</span></li><li><span class="rank">6</span><a class="hl" href="https://www.xiaohongshu.com/search_result?keyword=%E5%86%AC%E5%AD%A3%E8%BD%A6%E7%AA%97%E8%B5%B7%E9%9B%BE%E6%AD%A3%E7%A1%AE%E9%99%A4%E9%9B%BE%E6%96%B9%E6%B3%95" target="_blank" rel="noopener">冬季车窗起雾正确除雾方法</a><span class="heat">1901.5万</span><span class="tag ">▲ 6</span></li><li><span class="rank">7</span><a class="hl" href="https://www.xiaohongshu.com/search_result?keyword=%E4%BC%A6%E6%95%A6%E9%9B%A8%E5%A4%9C%E6%95%B0%E5%AD%97%E8%89%BA%E6%9C%AF%E5%A4%AA%E6%B2%BB%E6%84%88%E4%BA%86" target="_blank" rel="noopener">伦敦雨夜数字艺术太治愈了</a><span class="heat">1859.3万</span><span class="tag tag-new">新</span></li><li><span class="rank">8</span><a class="hl" href="https://www.xiaohongshu.com/search_result?keyword=%E6%8A%8A%E6%97%A5%E5%B8%B8%E6%8B%8D%E6%88%90%E7%94%B5%E5%BD%B1%E6%83%85%E7%BB%AA%E6%84%9F%E5%A4%A7%E7%89%87" target="_blank" rel="noopener">把日常拍成电影情绪感大片</a><span class="heat">1847.9万</span><span class="tag ">▲ 10</span></li><li><span class="rank">9</span><a class="hl" href="https://www.xiaohongshu.com/search_result?keyword=%E8%B6%85%E6%A8%A1%E5%90%8C%E6%AC%BE%E5%86%AC%E5%A4%A9%E6%8E%89%E7%A7%A4%E6%96%B9%E6%B3%95" target="_blank" rel="noopener">超模同款冬天掉秤方法</a><span class="heat">1839.3万</span><span class="tag tag-new">新</span></li><li><span class="rank">10</span><a class="hl" href="https://www.xiaohongshu.com/search_result?keyword=8%E4%B8%AA%E4%BD%8E%E6%88%90%E6%9C%AC%E5%88%9B%E6%84%8F%E6%8B%8D%E6%91%84%E8%A7%86%E8%A7%92" target="_blank" rel="noopener">8个低成本创意拍摄视角</a><span class="heat">1836.9万</span><span class="tag tag-new">新</span></li><li><span class="rank">11</span><a class="hl" href="https://www.xiaohongshu.com/search_result?keyword=%E4%B8%80%E6%8B%9B%E5%AD%A6%E4%BC%9A%E4%BB%BB%E6%84%8F%E5%88%87%E6%8D%A2%E6%BC%94%E5%94%B1%E9%A3%8E%E6%A0%BC" target="_blank" rel="noopener">一招学会任意切换演唱风格</a><span class="heat">1831.5万</span><span class="tag tag-new">新</span></li><li><span class="rank">12</span><a class="hl" href="https://www.xiaohongshu.com/search_result?keyword=%E6%97%A0%E9%99%90%E6%9A%96%E6%9A%96%E6%A2%85%E8%80%B6%E9%A9%AC%E6%96%AF%E5%85%8B%E7%89%B9%E5%88%AB%E8%AE%BF%E8%B0%88%E5%85%AC%E5%BC%80" target="_blank" rel="noopener">无限暖暖梅耶马斯克特别访谈公开</a><span class="heat">1822.2万</span><span class="tag tag-new">新</span></li></ol></section>
+  <section class="card" data-hot="douyin"><header class="card-head"><h2>抖音热搜</h2><span class="tag tag-dim">TOP 12</span></header><ol class="hot-list"><li><span class="rank">1</span><a class="hl" href="https://www.douyin.com/search/%E5%90%8C%E4%B9%A0%E4%B8%BB%E5%B8%AD%E4%BC%9A%E8%A7%81%E6%97%B6%E4%BB%96%E4%BB%AC%E9%83%BD%E6%8F%90%E5%88%B0%E8%BF%99%E4%B8%80%E7%82%B9" target="_blank" rel="noopener">同习主席会见时他们都提到这一点</a><span class="heat">0</span><span class="tag tag-new">新</span></li><li><span class="rank">2</span><a class="hl" href="https://www.douyin.com/search/APEC%E5%B7%A5%E5%95%86%E9%A2%86%E5%AF%BC%E4%BA%BA%E5%B3%B0%E4%BC%9A%E5%BC%80%E5%B9%95%E5%BC%8F%E4%B8%BE%E8%A1%8C" target="_blank" rel="noopener">APEC工商领导人峰会开幕式举行</a><span class="heat">1187.9万</span><span class="tag tag-new">新</span></li><li><span class="rank">3</span><a class="hl" href="https://www.douyin.com/search/%E9%9F%A9%E5%9B%BD%E6%80%BB%E7%BB%9F%E6%9D%8E%E5%9C%A8%E6%98%8E%E6%8A%B5%E8%BE%BE%E6%B7%B1%E5%9C%B3" target="_blank" rel="noopener">韩国总统李在明抵达深圳</a><span class="heat">1155.8万</span><span class="tag tag-new">新</span></li><li><span class="rank">4</span><a class="hl" href="https://www.douyin.com/search/%E5%A4%A7%E9%B9%8F%E5%B1%95%E7%BF%85%E4%BA%9A%E5%A4%AA%E6%89%AC%E5%B8%86" target="_blank" rel="noopener">大鹏展翅亚太扬帆</a><span class="heat">1137.2万</span><span class="tag tag-new">新</span></li><li><span class="rank">5</span><a class="hl" href="https://www.douyin.com/search/%E6%99%AE%E4%BA%AC%E6%8A%B5%E8%BE%BE%E6%B7%B1%E5%9C%B3" target="_blank" rel="noopener">普京抵达深圳</a><span class="heat">1136.2万</span><span class="tag ">▼ 3</span></li><li><span class="rank">6</span><a class="hl" href="https://www.douyin.com/search/APEC%E5%B3%B0%E4%BC%9A%E6%9C%89%E5%93%AA%E4%BA%9B%E9%A2%86%E5%AF%BC%E4%BA%BA%E5%8F%82%E5%8A%A0" target="_blank" rel="noopener">APEC峰会有哪些领导人参加</a><span class="heat">1074.8万</span><span class="tag ">▼ 1</span></li><li><span class="rank">7</span><a class="hl" href="https://www.douyin.com/search/%E5%9B%BD%E8%B6%B32%3A2%E6%88%98%E5%B9%B3%E5%B7%B4%E6%9E%97" target="_blank" rel="noopener">国足2:2战平巴林</a><span class="heat">1059.8万</span><span class="tag ">▼ 1</span></li><li><span class="rank">8</span><a class="hl" href="https://www.douyin.com/search/%E5%8D%97%E8%BF%A6%E5%B7%B4%E7%93%A6%E5%B3%B0%E6%97%A5%E7%85%A7%E9%87%91%E5%B1%B1%E5%A4%AA%E7%BE%8E%E4%BA%86" target="_blank" rel="noopener">南迦巴瓦峰日照金山太美了</a><span class="heat">944.1万</span><span class="tag tag-new">新</span></li><li><span class="rank">9</span><a class="hl" href="https://www.douyin.com/search/%E8%BE%A3%E7%9A%AE%E5%AD%90%E7%89%9B%E8%82%8B%E6%8E%92%E9%A6%99%E8%BF%B7%E7%B3%8A%E4%BA%86" target="_blank" rel="noopener">辣皮子牛肋排香迷糊了</a><span class="heat">937.5万</span><span class="tag ">▼ 2</span></li><li><span class="rank">10</span><a class="hl" href="https://www.douyin.com/search/%E4%B8%AD%E5%9B%BD%E8%B4%A1%E7%8C%AE%E4%B8%BA%E4%BA%9A%E5%A4%AA%E5%8F%91%E5%B1%95%E6%B3%A8%E5%85%A5%E6%96%B0%E5%8A%A8%E8%83%BD" target="_blank" rel="noopener">中国贡献为亚太发展注入新动能</a><span class="heat">918.5万</span><span class="tag tag-new">新</span></li><li><span class="rank">11</span><a class="hl" href="https://www.douyin.com/search/%E5%AA%92%E4%BD%93%EF%BC%9A%E7%89%B9%E6%9C%97%E6%99%AE%E5%B0%86%E4%BA%8E18%E6%97%A5%E6%99%9A%E6%8A%B5%E8%BE%BE%E6%B7%B1%E5%9C%B3" target="_blank" rel="noopener">媒体：特朗普将于18日晚抵达深圳</a><span class="heat">911.3万</span><span class="tag ">▼ 8</span></li><li><span class="rank">12</span><a class="hl" href="https://www.douyin.com/search/%E6%8A%96%E9%9F%B3%E5%8D%9A%E4%B8%BB%E9%BD%90%E8%81%9A%E6%B7%B1%E5%9C%B3%E4%B8%BA%E4%BD%A0%E8%AE%B2%E5%A5%BDAPEC" target="_blank" rel="noopener">抖音博主齐聚深圳为你讲好APEC</a><span class="heat">885.0万</span><span class="tag tag-new">新</span></li></ol></section><section class="card" data-hot="zhihu"><header class="card-head"><h2>知乎热榜</h2><span class="tag tag-dim">TOP 12</span></header><ol class="hot-list"><li><span class="rank">1</span><a class="hl" href="https://www.zhihu.com/search?type=content&amp;q=%E9%9B%B7%E5%86%9BAPEC%E5%8F%91%E8%A8%80%E7%A7%B0%E8%BF%87%E5%8E%BB%E5%87%A0%E5%B9%B4%E6%8C%A3%E5%88%B0%E9%92%B1%E7%9A%84%20AI%20%E5%85%AC%E5%8F%B8%E5%BE%88%E5%B0%91%EF%BC%8C%E8%AE%A4%E4%B8%BA%E5%85%B7%E8%BA%AB%E6%99%BA%E8%83%BD%E4%BA%A7%E4%B8%9A%E6%83%B3%E8%B1%A1%E5%8A%9B%E5%B0%86%E8%B6%85%E6%B1%BD%E8%BD%A6%E4%BA%A7%E4%B8%9A%EF%BC%8C%E5%AF%B9%E6%AD%A4%E4%BD%A0%E6%80%8E%E4%B9%88%E7%9C%8B%EF%BC%9F" target="_blank" rel="noopener">雷军APEC发言称过去几年挣到钱的 AI 公司很少，认为具身智能产业想象力将超汽车产业，对此你怎么看？</a><span class="heat">1110.0万</span><span class="tag ">▲ 3</span></li><li><span class="rank">2</span><a class="hl" href="https://www.zhihu.com/search?type=content&amp;q=%E5%A5%B3%E5%AD%90%E5%9C%A8%E7%9B%92%E9%A9%AC%E4%B8%8B%E5%8D%95%E5%9B%9B%E7%99%BE%E5%A4%9A%E6%AC%A1%E5%85%A8%E9%83%A8%E7%94%B3%E8%AF%B7%E4%BB%85%E9%80%80%E6%AC%BE%EF%BC%8C%E7%A7%B0%E3%80%8C%E5%88%BA%E6%BF%80%E8%A7%A3%E5%8E%8B%E3%80%8D%EF%BC%8C%E6%98%8E%E7%9F%A5%E4%B8%8D%E5%85%89%E5%BD%A9%E8%BF%98%E6%98%AF%E5%BF%8D%E4%B8%8D%E4%BD%8F%E4%B8%8B%E5%8D%95%EF%BC%8C%E5%A6%82%E4%BD%95%E4%BB%8E%E5%BF%83%E7%90%86%E5%AD%A6%E8%A7%92%E5%BA%A6%E8%A7%A3%E8%AF%BB%EF%BC%9F" target="_blank" rel="noopener">女子在盒马下单四百多次全部申请仅退款，称「刺激解压」，明知不光彩还是忍不住下单，如何从心理学角度解读？</a><span class="heat">248.0万</span><span class="tag tag-new">新</span></li><li><span class="rank">3</span><a class="hl" href="https://www.zhihu.com/search?type=content&amp;q=%E5%8A%9D%E8%A1%A8%E5%BC%9F%E8%AF%BB%E5%8D%9A%EF%BC%8C%E4%BB%96%E8%AF%B4%E7%8E%B0%E5%9C%A8%E7%9A%84%E5%8D%9A%E5%A3%AB%E5%B7%B2%E7%BB%8F%E4%B8%8D%E6%98%AF%E5%89%8D%E5%87%A0%E5%B9%B4%E4%BA%86%EF%BC%8C%E7%9C%9F%E6%98%AF%E8%BF%99%E6%A0%B7%E5%90%97%EF%BC%9F" target="_blank" rel="noopener">劝表弟读博，他说现在的博士已经不是前几年了，真是这样吗？</a><span class="heat">159.0万</span><span class="tag ">▲ 15</span></li><li><span class="rank">4</span><a class="hl" href="https://www.zhihu.com/search?type=content&amp;q=%E7%BD%91%E4%BC%A0%E7%94%9F%E8%8F%9C%E3%80%8C%E5%A1%8C%E6%88%BF%E3%80%8D%E4%BA%86%EF%BC%8C%E7%9C%8B%E4%BC%BC%E5%81%A5%E5%BA%B7%E5%85%B6%E5%AE%9E%E8%86%B3%E9%A3%9F%E7%BA%A4%E7%BB%B4%E7%9A%84%E5%90%AB%E9%87%8F%E5%BE%88%E4%BD%8E%EF%BC%8C%E6%98%AF%E7%9C%9F%E7%9A%84%E5%90%97%EF%BC%9F" target="_blank" rel="noopener">网传生菜「塌房」了，看似健康其实膳食纤维的含量很低，是真的吗？</a><span class="heat">132.0万</span><span class="tag tag-new">新</span></li><li><span class="rank">5</span><a class="hl" href="https://www.zhihu.com/search?type=content&amp;q=%E4%B8%98%E6%88%90%E6%A1%90%E4%BB%A5%E6%B1%82%E7%9C%9F%E9%99%A2%E9%95%BF%E8%BA%AB%E4%BB%BD%E5%9C%A8%E4%BA%BA%E6%B0%91%E6%97%A5%E6%8A%A5%E6%92%B0%E6%96%87%EF%BC%8C%E7%A7%B0%E3%80%8C%E4%BA%94%E5%88%B0%E5%8D%81%E5%B9%B4%E5%86%85%E6%9C%89%E6%9C%9B%E6%9C%AC%E5%9C%9F%E5%9F%B9%E5%85%BB%E5%87%BA%E9%A2%86%E5%86%9B%E6%95%B0%E5%AD%A6%E5%AE%B6%E3%80%8D%EF%BC%8C%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E4%BB%96%E7%9A%84%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%9F" target="_blank" rel="noopener">丘成桐以求真院长身份在人民日报撰文，称「五到十年内有望本土培养出领军数学家」，如何理解他的这篇文章？</a><span class="heat">119.0万</span><span class="tag tag-new">新</span></li><li><span class="rank">6</span><a class="hl" href="https://www.zhihu.com/search?type=content&amp;q=%E6%80%8E%E4%B9%88%E7%9C%8B%20JetBrains%20%E6%88%90%E7%AB%8B%2020%20%E5%B9%B4%E6%9D%A5%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BA%8F%E6%8D%9F%EF%BC%8C%E8%BF%99%E6%98%AF%E4%B8%8D%E6%98%AF%E4%BB%A3%E8%A1%A8%E4%BA%86%E4%B8%80%E4%B8%AA%E6%97%B6%E4%BB%A3%E7%9A%84%E7%BB%93%E6%9D%9F%EF%BC%9F" target="_blank" rel="noopener">怎么看 JetBrains 成立 20 年来第一次亏损，这是不是代表了一个时代的结束？</a><span class="heat">111.0万</span><span class="tag ">▲ 3</span></li><li><span class="rank">7</span><a class="hl" href="https://www.zhihu.com/search?type=content&amp;q=BLG%E5%9C%A8%E8%81%94%E8%B5%9B%E5%86%85%E7%BB%84%E5%BB%BA%E6%A2%A6%E4%B9%8B%E9%98%9F%E4%B8%80%E5%AE%B6%E7%8B%AC%E5%A4%A7%E7%9C%9F%E7%9A%84%E6%9C%89%E5%88%A9%E4%BA%8E%E8%81%94%E8%B5%9B%E5%8F%91%E5%B1%95%E5%90%97%EF%BC%9F" target="_blank" rel="noopener">BLG在联赛内组建梦之队一家独大真的有利于联赛发展吗？</a><span class="heat">111.0万</span><span class="tag ">▲ 6</span></li><li><span class="rank">8</span><a class="hl" href="https://www.zhihu.com/search?type=content&amp;q=%E5%90%8C%E5%8F%B0%E4%BA%AE%E7%9B%B8APEC%EF%BC%8C%E7%8E%8B%E4%BC%A0%E7%A6%8F%E8%B0%88%E6%96%B0%E8%83%BD%E6%BA%90%E5%87%8F%E6%8E%92%EF%BC%8C%E9%9B%B7%E5%86%9B%E7%95%85%E4%BA%ABAI%E6%9C%AA%E6%9D%A5%EF%BC%8C%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85%E4%B8%A4%E4%BD%8D%E5%A4%A7%E4%BD%AC%E7%9A%84%E2%80%9C%E6%AE%8A%E9%80%94%E5%90%8C%E5%BD%92%E2%80%9D%EF%BC%9F" target="_blank" rel="noopener">同台亮相APEC，王传福谈新能源减排，雷军畅享AI未来，如何看待两位大佬的“殊途同归”？</a><span class="heat">109.0万</span><span class="tag tag-new">新</span></li><li><span class="rank">9</span><a class="hl" href="https://www.zhihu.com/search?type=content&amp;q=%E4%B8%8D%E5%B0%91%E3%80%8C%E5%9B%BA%E6%94%B6%2B%E3%80%8D%E7%90%86%E8%B4%A2%E8%BF%91%201%20%E4%B8%AA%E6%9C%88%E6%94%B6%E7%9B%8A%E4%B8%BA%E8%B4%9F%EF%BC%8C%E3%80%8C%E5%9B%BA%E6%94%B6%2B%E3%80%8D%E9%87%8C%E7%9A%84%E3%80%8C%2B%E3%80%8D%E9%80%9A%E5%B8%B8%E5%8A%A0%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F%E5%AE%83%E4%BC%9A%E5%B8%A6%E6%9D%A5%E5%93%AA%E4%BA%9B%E9%A2%9D%E5%A4%96%E9%A3%8E%E9%99%A9%EF%BC%9F" target="_blank" rel="noopener">不少「固收+」理财近 1 个月收益为负，「固收+」里的「+」通常加了什么？它会带来哪些额外风险？</a><span class="heat">107.0万</span><span class="tag tag-new">新</span></li><li><span class="rank">10</span><a class="hl" href="https://www.zhihu.com/search?type=content&amp;q=%E6%9B%9D%E3%80%8AGTA6%E3%80%8BPC%20%E7%89%88%E5%B0%86%E4%BA%8E%202027%20%E5%B9%B4%E7%AC%AC%E4%B8%80%E5%AD%A3%E5%BA%A6%E5%8F%91%E5%94%AE%EF%BC%8C%E4%B8%BA%E4%BD%95%20R%20%E6%98%9F%E5%8F%8C%E5%B9%B3%E5%8F%B0%E9%97%B4%E9%9A%94%E4%BC%9A%E8%BF%9B%E4%B8%80%E6%AD%A5%E7%BC%A9%E7%9F%AD%EF%BC%9F" target="_blank" rel="noopener">曝《GTA6》PC 版将于 2027 年第一季度发售，为何 R 星双平台间隔会进一步缩短？</a><span class="heat">104.0万</span><span class="tag tag-new">新</span></li><li><span class="rank">11</span><a class="hl" href="https://www.zhihu.com/search?type=content&amp;q=%E6%9D%A8%E7%80%9A%E6%A3%AE%E5%9E%83%E5%9C%BE%E6%97%B6%E9%97%B4%E7%99%BB%E5%9C%BA%E8%A2%AB%E5%AE%89%E6%8E%92%E6%89%A7%E8%A1%8C%E7%A0%8D%E9%B2%A8%E6%88%98%E6%9C%AF%E7%9F%AD%E6%97%B6%E9%97%B4%205%20%E7%8A%AF%EF%BC%8C%E8%BF%99%E4%B8%80%E5%AE%89%E6%8E%92%E5%90%88%E7%90%86%E5%90%97%EF%BC%9F" target="_blank" rel="noopener">杨瀚森垃圾时间登场被安排执行砍鲨战术短时间 5 犯，这一安排合理吗？</a><span class="heat">103.0万</span><span class="tag tag-new">新</span></li><li><span class="rank">12</span><a class="hl" href="https://www.zhihu.com/search?type=content&amp;q=%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%91%E6%9C%9F%E5%9B%BD%E4%BA%A73A%E5%8A%A8%E4%BD%9C%E6%B8%B8%E6%88%8F%EF%BC%88%E3%80%8A%E9%BB%91%E7%A5%9E%E8%AF%9D%EF%BC%9A%E6%82%9F%E7%A9%BA%E3%80%8B%E3%80%8A%E6%98%8E%E6%9C%AB%EF%BC%9A%E6%B8%8A%E8%99%9A%E4%B9%8B%E7%BE%BD%E3%80%8B%E3%80%8A%E5%BD%B1%E4%B9%8B%E5%88%83%E9%9B%B6%E3%80%8B%EF%BC%89%E6%99%AE%E9%81%8D%E8%B5%B0%E6%9A%97%E9%BB%91%E5%8E%8B%E6%8A%91%E9%A3%8E%E6%A0%BC%EF%BC%9F" target="_blank" rel="noopener">为什么近期国产3A动作游戏（《黑神话：悟空》《明末：渊虚之羽》《影之刃零》）普遍走暗黑压抑风格？</a><span class="heat">92.0万</span><span class="tag tag-new">新</span></li></ol></section>
+  <section class="card" data-hot="bilibili"><header class="card-head"><h2>B站热搜</h2><span class="tag tag-dim">TOP 12</span></header><ol class="hot-list"><li><span class="rank">1</span><a class="hl" href="https://search.bilibili.com/all?keyword=%E4%B9%A0%E8%BF%91%E5%B9%B3%E5%90%8C%E5%A4%96%E5%9B%BD%E9%A2%86%E5%AF%BC%E4%BA%BA%E4%B8%BE%E8%A1%8C%E5%8F%8C%E8%BE%B9%E4%BC%9A%E6%99%A4" target="_blank" rel="noopener">习近平同外国领导人举行双边会晤</a><span class="heat">725.9万</span><span class="tag tag-new">新</span></li><li><span class="rank">2</span><a class="hl" href="https://search.bilibili.com/all?keyword=APEC%E5%90%B8%E5%BC%95%E5%A4%96%E5%9B%BD%E5%8F%8B%E4%BA%BA%E5%8D%8E%E5%BC%BA%E5%8C%97%E6%89%AB%E8%B4%A7" target="_blank" rel="noopener">APEC吸引外国友人华强北扫货</a><span class="heat">717.2万</span><span class="tag tag-new">新</span></li><li><span class="rank">3</span><a class="hl" href="https://search.bilibili.com/all?keyword=TGA2026%E5%85%A8%E6%8F%90%E5%90%8D%E5%90%8D%E5%8D%95%E5%85%AC%E5%B8%83" target="_blank" rel="noopener">TGA2026全提名名单公布</a><span class="heat">662.2万</span><span class="tag tag-new">新</span></li><li><span class="rank">4</span><a class="hl" href="https://search.bilibili.com/all?keyword=%E4%B8%96%E7%95%8C%E5%86%A0%E5%86%9BBLG%E5%9B%9E%E5%AE%B6%E5%95%A6" target="_blank" rel="noopener">世界冠军BLG回家啦</a><span class="heat">595.3万</span><span class="tag tag-new">新</span></li><li><span class="rank">5</span><a class="hl" href="https://search.bilibili.com/all?keyword=7%E5%A4%A9%E5%A4%A7%E4%BC%9A%E5%91%98%E6%80%8E%E4%B9%88%E7%9C%8B%E4%B8%8D%E6%B5%AA%E8%B4%B9" target="_blank" rel="noopener">7天大会员怎么看不浪费</a><span class="heat">65.0万</span><span class="tag ">▼ 2</span></li><li><span class="rank">6</span><a class="hl" href="https://search.bilibili.com/all?keyword=%E6%AC%A7%E5%9B%BD%E8%81%94%20%E5%A8%81%E5%B0%94%E5%A3%AB2-3%E8%91%A1%E8%90%84%E7%89%99" target="_blank" rel="noopener">欧国联 威尔士2-3葡萄牙</a><span class="heat">63.2万</span><span class="tag tag-new">新</span></li><li><span class="rank">7</span><a class="hl" href="https://search.bilibili.com/all?keyword=%E5%BA%93%E9%87%8C%E8%A1%A8%E6%80%81%E6%84%BF%E6%8B%85%E4%BB%BB%E7%90%83%E9%98%9F%E5%89%AF%E6%89%8B" target="_blank" rel="noopener">库里表态愿担任球队副手</a><span class="heat">58.9万</span><span class="tag tag-new">新</span></li><li><span class="rank">8</span><a class="hl" href="https://search.bilibili.com/all?keyword=Chovy%E8%8E%B7TGA%E6%9C%80%E4%BD%B3%E7%94%B5%E7%AB%9E%E9%80%89%E6%89%8B%E6%8F%90%E5%90%8D" target="_blank" rel="noopener">Chovy获TGA最佳电竞选手提名</a><span class="heat">58.9万</span><span class="tag tag-new">新</span></li><li><span class="rank">9</span><a class="hl" href="https://search.bilibili.com/all?keyword=%E9%9F%A9%E5%9B%BD%E6%80%BB%E7%BB%9F%E6%9D%8E%E5%9C%A8%E6%98%8E%E6%8A%B5%E8%BE%BE%E6%B7%B1%E5%9C%B3" target="_blank" rel="noopener">韩国总统李在明抵达深圳</a><span class="heat">58.8万</span><span class="tag tag-new">新</span></li><li><span class="rank">10</span><a class="hl" href="https://search.bilibili.com/all?keyword=OpenAI%E6%96%B0%E6%A8%A1%E5%9E%8B%E9%81%AD%E5%B7%AE%E8%AF%84%E6%B5%B7%E5%95%B8" target="_blank" rel="noopener">OpenAI新模型遭差评海啸</a><span class="heat">58.7万</span><span class="tag tag-new">新</span></li><li><span class="rank">11</span><a class="hl" href="https://search.bilibili.com/all?keyword=%E7%8E%8B%E8%80%85%E6%96%B0%E8%8B%B1%E9%9B%84%E5%88%80%E9%94%8B%E5%AE%9D%E8%B4%9D%E5%AE%9E%E6%88%98%E6%B5%8B%E8%AF%84" target="_blank" rel="noopener">王者新英雄刀锋宝贝实战测评</a><span class="heat">56.4万</span><span class="tag tag-new">新</span></li><li><span class="rank">12</span><a class="hl" href="https://search.bilibili.com/all?keyword=%E4%BA%BA%E7%B1%BB%E9%A3%9E%E7%9A%84%E6%9C%80%E8%BF%9C%E6%8E%A2%E6%B5%8B%E5%99%A8%E5%88%B0%E5%93%AA%E5%84%BF%E4%BA%86" target="_blank" rel="noopener">人类飞的最远探测器到哪儿了</a><span class="heat">54.1万</span><span class="tag tag-new">新</span></li></ol></section><section class="card memo"><header class="card-head"><h2>备忘录</h2><span class="tag tag-dim">仅本机保存</span></header>
+      <textarea id="memo" placeholder="随手记点什么…（存在本机浏览器，不会被每日更新覆盖）"></textarea>
+      <div class="memo-bar"><span class="memo-status" id="memo-status"></span><button class="btn" id="memo-copy">复制全部</button></div></section></div>
+<div class="wide-stack"><section class="card card-wide" data-news="business"><header class="card-head"><h2>商业与科技</h2><span class="tag tag-dim">6 条</span></header><div class="news-list"><article class="news-item" data-id="bucde96b" data-t="何小鹏的底牌，不在车里"><a class="n-title" href="https://www.tmtpost.com/8209083.html" target="_blank" rel="noopener">何小鹏的底牌，不在车里</a><p class="comment">整车毛利承压，往出行服务和智能化转移才是它的底牌逻辑。</p><div class="meta"><span class="meta-src">钛媒体</span><span class="meta-time">11-18 16:05</span></div></article><article class="news-item" data-id="bu9746d8" data-t="黄仁勋缺席后的第一份财报，和重返英伟达的“技术路线图”"><a class="n-title" href="https://www.tmtpost.com/8209426.html" target="_blank" rel="noopener">黄仁勋缺席后的第一份财报，和重返英伟达的“技术路线图”</a><p class="comment">黄仁勋交棒后的首份财报，看点在路线图能否接住AI算力需求。</p><div class="meta"><span class="meta-src">钛媒体</span><span class="meta-time">11-18 16:05</span></div></article><article class="news-item" data-id="bue02dd6" data-t="诺奖得主做AI制药，20个月狂揽550亿"><a class="n-title" href="https://www.tmtpost.com/8209976.html" target="_blank" rel="noopener">诺奖得主做AI制药，20个月狂揽550亿</a><p class="comment">AI制药一级市场热度未退，诺奖得主背书把融资速度推得更快。</p><div class="meta"><span class="meta-src">钛媒体</span><span class="meta-time">11-18 17:51</span></div></article><article class="news-item" data-id="bu63d0df" data-t="第一批打工的人形机器人，有的已经失业了"><a class="n-title" href="https://www.tmtpost.com/8209375.html" target="_blank" rel="noopener">第一批打工的人形机器人，有的已经失业了</a><p class="comment">机器人进店试用接连失误，出货增长与真实岗位需求明显脱节。</p><div class="meta"><span class="meta-src">钛媒体</span><span class="meta-time">11-18 17:51</span></div></article><article class="news-item" data-id="bu0800bd" data-t="2026年Q3酒店业财报：降价的没换来客人，涨价的守住了?"><a class="n-title" href="https://www.tmtpost.com/8209385.html" target="_blank" rel="noopener">2026年Q3酒店业财报：降价的没换来客人，涨价的守住了?</a><p class="comment">降价没换来客流，涨价却守住价格带，酒店业分化已成定局。</p><div class="meta"><span class="meta-src">钛媒体</span><span class="meta-time">11-18 16:05</span></div></article><article class="news-item" data-id="bu57442a" data-t="珀莱雅收购花知晓，贝泰妮收购踩坑，美妆大并购时代来了？"><a class="n-title" href="https://www.tmtpost.com/8209331.html" target="_blank" rel="noopener">珀莱雅收购花知晓，贝泰妮收购踩坑，美妆大并购时代来了？</a><p class="comment">美妆靠并购扩品类，收购容易，渠道与用户运营才是硬仗。</p><div class="meta"><span class="meta-src">钛媒体</span><span class="meta-time">11-18 16:05</span></div></article></div></section><section class="card card-wide" data-news="invest"><header class="card-head"><h2>投资与市场</h2><span class="tag tag-dim">8 条</span></header><div class="quotes"><div class="quote up"><span class="q-name">上证指数</span><span class="q-val">3,587.83</span><span class="q-pct">▲ 0.09%</span></div><div class="quote up"><span class="q-name">深证成指</span><span class="q-val">10,659.41</span><span class="q-pct">▲ 0.20%</span></div><div class="quote up"><span class="q-name">创业板指</span><span class="q-val">2,311.62</span><span class="q-pct">▲ 0.85%</span></div><div class="quote up"><span class="q-name">沪深300</span><span class="q-val">3,983.77</span><span class="q-pct">▲ 0.18%</span></div><div class="quote down"><span class="q-name">上证50</span><span class="q-val">2,764.54</span><span class="q-pct">▼ 0.14%</span></div><div class="quote down"><span class="q-name">恒生指数</span><span class="q-val">23,294.75</span><span class="q-pct">▼ 0.91%</span></div><div class="quote down"><span class="q-name">离岸人民币</span><span class="q-val">6.67</span><span class="q-pct">▼ 0.01%</span></div></div><div class="news-list"><article class="news-item" data-id="in0d9a66" data-t="腾讯Q3营收同比增8%至2073.4亿元，资本开支814.3亿元大超预期，自由现金流降至-691亿元｜财报见闻"><a class="n-title" href="https://wallstreetcn.com/articles/3786186" target="_blank" rel="noopener">腾讯Q3营收同比增8%至2073.4亿元，资本开支814.3亿元大超预期，自由现金流降至-691亿元｜财报见闻</a><p class="comment">营收回增但资本开支冲到814亿，自由现金流转负是真正的代价。</p><div class="meta"><span class="meta-src">华尔街见闻</span><span class="meta-time">11-18 16:53</span></div></article><article class="news-item" data-id="in3442b3" data-t="美伊再度交火！伊朗袭击科威特、巴林，美国空袭伊朗导弹基地"><a class="n-title" href="https://wallstreetcn.com/articles/3786188" target="_blank" rel="noopener">美伊再度交火！伊朗袭击科威特、巴林，美国空袭伊朗导弹基地</a><p class="comment">波斯湾再起交火，油价与避险资产的波动会先于外交进展定价。</p><div class="meta"><span class="meta-src">华尔街见闻</span><span class="meta-time">11-18 16:37</span></div></article><article class="news-item" data-id="in06f3ea" data-t="A股三大股指午后齐涨，科创50涨超2%，算力硬件、算力租赁大反弹，恒指跌1%，京东大跌7%"><a class="n-title" href="https://wallstreetcn.com/articles/3786152" target="_blank" rel="noopener">A股三大股指午后齐涨，科创50涨超2%，算力硬件、算力租赁大反弹，恒指跌1%，京东大跌7%</a><p class="comment">午后算力硬件点火带指数翻红，尾盘ETF放量显示资金在抄底。</p><div class="meta"><span class="meta-src">华尔街见闻</span><span class="meta-time">11-18 16:18</span></div></article><article class="news-item" data-id="indbb165" data-t="“AI央行”开启量化紧缩！英伟达新CEO收紧投资闸门，Neocloud融资命脉告急"><a class="n-title" href="https://wallstreetcn.com/articles/3786182" target="_blank" rel="noopener">“AI央行”开启量化紧缩！英伟达新CEO收紧投资闸门，Neocloud融资命脉告急</a><p class="comment">收紧财务担保等于抽走AI基建输血，高杠杆Neocloud先扛不住。</p><div class="meta"><span class="meta-src">华尔街见闻</span><span class="meta-time">11-18 16:26</span></div></article><article class="news-item" data-id="in007da9" data-t="TrendForce预测：HBM4明年将涨价超100%，但NAND二季度起转跌"><a class="n-title" href="https://wallstreetcn.com/articles/3786178" target="_blank" rel="noopener">TrendForce预测：HBM4明年将涨价超100%，但NAND二季度起转跌</a><p class="comment">AI需求把HBM4推向翻倍涨价，NAND却在二季度转入下行周期。</p><div class="meta"><span class="meta-src">华尔街见闻</span><span class="meta-time">11-18 15:34</span></div></article><article class="news-item" data-id="in67b35b" data-t="力箭一号遥十六通过出厂评审，中科宇航两发火箭进入海射准备"><a class="n-title" href="https://wallstreetcn.com/articles/3786191" target="_blank" rel="noopener">力箭一号遥十六通过出厂评审，中科宇航两发火箭进入海射准备</a><p class="comment">两发火箭进入海射准备，民营商业航天的发射节奏在加密。</p><div class="meta"><span class="meta-src">华尔街见闻</span><span class="meta-time">11-18 16:58</span></div></article><article class="news-item" data-id="ina51254" data-t="黄金什么时候对实际利率脱敏？"><a class="n-title" href="https://wallstreetcn.com/articles/3786181" target="_blank" rel="noopener">黄金什么时候对实际利率脱敏？</a><p class="comment">央行购金和ETF资金流正在改写金价与实际利率的旧相关性。</p><div class="meta"><span class="meta-src">华尔街见闻</span><span class="meta-time">11-18 16:51</span></div></article><article class="news-item" data-id="in0ae614" data-t="抖音生活服务换帅，莫少君接棒浦燕子"><a class="n-title" href="https://wallstreetcn.com/articles/3786179" target="_blank" rel="noopener">抖音生活服务换帅，莫少君接棒浦燕子</a><p class="comment">红果短剧负责人接手本地生活，抖音想把内容流量导进交易。</p><div class="meta"><span class="meta-src">华尔街见闻</span><span class="meta-time">11-18 15:30</span></div></article></div></section></div>
+<footer><span>数据源：微博热搜 · 小红书热帖 · 抖音 · 知乎 · B站 · 钛媒体 · 量子位 · 爱范儿 · 华尔街见闻 · 东方财富行情 · Open-Meteo</span>
+  <span>烘焙于 2026-11-18 18:03:45</span></footer>
+</div>
+<script>
+
+(function(){
+"use strict";
+var CFG = {"lat": 31.2304, "lon": 121.4737, "tz": "Asia/Shanghai", "market": ["1.000001", "0.399001", "0.399006", "1.000300", "1.000016", "100.HSI", "133.USDCNH"], "hot": [{"key": "weibo", "url": "https://dataxapi.com/zh/tools/hot-search/weibo.md"}, {"key": "xiaohongshu", "url": "https://dataxapi.com/zh/tools/hot-search/xiaohongshu.md"}, {"key": "douyin", "url": "https://dataxapi.com/zh/tools/hot-search/douyin.md"}, {"key": "zhihu", "url": "https://dataxapi.com/zh/tools/hot-search/zhihu.md"}, {"key": "bilibili", "url": "https://dataxapi.com/zh/tools/hot-search/bilibili.md"}], "rss": [{"key": "business", "url": "https://www.tmtpost.com/feed", "site": "钛媒体"}, {"key": "business", "url": "https://www.qbitai.com/feed", "site": "量子位"}, {"key": "business", "url": "https://www.ifanr.com/feed", "site": "爱范儿"}, {"key": "invest", "url": "https://dedicated.wallstreetcn.com/rss.xml", "site": "华尔街见闻"}]};
+var BAKED = {"ts": "2026-11-18T18:03:45.436347+08:00", "news": [{"id": "bu63d0df", "title": "第一批打工的人形机器人，有的已经失业了", "key": "business"}, {"id": "bue02dd6", "title": "诺奖得主做AI制药，20个月狂揽550亿", "key": "business"}, {"id": "bucde96b", "title": "何小鹏的底牌，不在车里", "key": "business"}, {"id": "bu57442a", "title": "珀莱雅收购花知晓，贝泰妮收购踩坑，美妆大并购时代来了？", "key": "business"}, {"id": "bu0800bd", "title": "2026年Q3酒店业财报：降价的没换来客人，涨价的守住了?", "key": "business"}, {"id": "bu9746d8", "title": "黄仁勋缺席后的第一份财报，和重返英伟达的“技术路线图”", "key": "business"}, {"id": "in67b35b", "title": "力箭一号遥十六通过出厂评审，中科宇航两发火箭进入海射准备", "key": "invest"}, {"id": "in0d9a66", "title": "腾讯Q3营收同比增8%至2073.4亿元，资本开支814.3亿元大超预期，自由现金流降至-691亿元｜财报见闻", "key": "invest"}, {"id": "ina51254", "title": "黄金什么时候对实际利率脱敏？", "key": "invest"}, {"id": "in3442b3", "title": "美伊再度交火！伊朗袭击科威特、巴林，美国空袭伊朗导弹基地", "key": "invest"}, {"id": "indbb165", "title": "“AI央行”开启量化紧缩！英伟达新CEO收紧投资闸门，Neocloud融资命脉告急", "key": "invest"}, {"id": "in06f3ea", "title": "A股三大股指午后齐涨，科创50涨超2%，算力硬件、算力租赁大反弹，恒指跌1%，京东大跌7%", "key": "invest"}, {"id": "in007da9", "title": "TrendForce预测：HBM4明年将涨价超100%，但NAND二季度起转跌", "key": "invest"}, {"id": "in0ae614", "title": "抖音生活服务换帅，莫少君接棒浦燕子", "key": "invest"}], "comments": {"何小鹏的底牌，不在车里": "整车毛利承压，往出行服务和智能化转移才是它的底牌逻辑。", "黄仁勋缺席后的第一份财报，和重返英伟达的“技术路线图”": "黄仁勋交棒后的首份财报，看点在路线图能否接住AI算力需求。", "诺奖得主做AI制药，20个月狂揽550亿": "AI制药一级市场热度未退，诺奖得主背书把融资速度推得更快。", "第一批打工的人形机器人，有的已经失业了": "机器人进店试用接连失误，出货增长与真实岗位需求明显脱节。", "2026年Q3酒店业财报：降价的没换来客人，涨价的守住了?": "降价没换来客流，涨价却守住价格带，酒店业分化已成定局。", "珀莱雅收购花知晓，贝泰妮收购踩坑，美妆大并购时代来了？": "美妆靠并购扩品类，收购容易，渠道与用户运营才是硬仗。", "腾讯Q3营收同比增8%至2073.4亿元，资本开支814.3亿元大超预期，自由现金流降至-691亿元｜财报见闻": "营收回增但资本开支冲到814亿，自由现金流转负是真正的代价。", "美伊再度交火！伊朗袭击科威特、巴林，美国空袭伊朗导弹基地": "波斯湾再起交火，油价与避险资产的波动会先于外交进展定价。", "A股三大股指午后齐涨，科创50涨超2%，算力硬件、算力租赁大反弹，恒指跌1%，京东大跌7%": "午后算力硬件点火带指数翻红，尾盘ETF放量显示资金在抄底。", "“AI央行”开启量化紧缩！英伟达新CEO收紧投资闸门，Neocloud融资命脉告急": "收紧财务担保等于抽走AI基建输血，高杠杆Neocloud先扛不住。", "TrendForce预测：HBM4明年将涨价超100%，但NAND二季度起转跌": "AI需求把HBM4推向翻倍涨价，NAND却在二季度转入下行周期。", "力箭一号遥十六通过出厂评审，中科宇航两发火箭进入海射准备": "两发火箭进入海射准备，民营商业航天的发射节奏在加密。", "黄金什么时候对实际利率脱敏？": "央行购金和ETF资金流正在改写金价与实际利率的旧相关性。", "抖音生活服务换帅，莫少君接棒浦燕子": "红果短剧负责人接手本地生活，抖音想把内容流量导进交易。"}, "curated": {"business": [{"t": "何小鹏的底牌，不在车里", "l": "https://www.tmtpost.com/8209083.html", "s": "钛媒体", "p": "11-18 16:05"}, {"t": "黄仁勋缺席后的第一份财报，和重返英伟达的“技术路线图”", "l": "https://www.tmtpost.com/8209426.html", "s": "钛媒体", "p": "11-18 16:05"}, {"t": "诺奖得主做AI制药，20个月狂揽550亿", "l": "https://www.tmtpost.com/8209976.html", "s": "钛媒体", "p": "11-18 17:51"}, {"t": "第一批打工的人形机器人，有的已经失业了", "l": "https://www.tmtpost.com/8209375.html", "s": "钛媒体", "p": "11-18 17:51"}, {"t": "2026年Q3酒店业财报：降价的没换来客人，涨价的守住了?", "l": "https://www.tmtpost.com/8209385.html", "s": "钛媒体", "p": "11-18 16:05"}, {"t": "珀莱雅收购花知晓，贝泰妮收购踩坑，美妆大并购时代来了？", "l": "https://www.tmtpost.com/8209331.html", "s": "钛媒体", "p": "11-18 16:05"}], "invest": [{"t": "腾讯Q3营收同比增8%至2073.4亿元，资本开支814.3亿元大超预期，自由现金流降至-691亿元｜财报见闻", "l": "https://wallstreetcn.com/articles/3786186", "s": "华尔街见闻", "p": "11-18 16:53"}, {"t": "美伊再度交火！伊朗袭击科威特、巴林，美国空袭伊朗导弹基地", "l": "https://wallstreetcn.com/articles/3786188", "s": "华尔街见闻", "p": "11-18 16:37"}, {"t": "A股三大股指午后齐涨，科创50涨超2%，算力硬件、算力租赁大反弹，恒指跌1%，京东大跌7%", "l": "https://wallstreetcn.com/articles/3786152", "s": "华尔街见闻", "p": "11-18 16:18"}, {"t": "“AI央行”开启量化紧缩！英伟达新CEO收紧投资闸门，Neocloud融资命脉告急", "l": "https://wallstreetcn.com/articles/3786182", "s": "华尔街见闻", "p": "11-18 16:26"}, {"t": "TrendForce预测：HBM4明年将涨价超100%，但NAND二季度起转跌", "l": "https://wallstreetcn.com/articles/3786178", "s": "华尔街见闻", "p": "11-18 15:34"}, {"t": "力箭一号遥十六通过出厂评审，中科宇航两发火箭进入海射准备", "l": "https://wallstreetcn.com/articles/3786191", "s": "华尔街见闻", "p": "11-18 16:58"}, {"t": "黄金什么时候对实际利率脱敏？", "l": "https://wallstreetcn.com/articles/3786181", "s": "华尔街见闻", "p": "11-18 16:51"}, {"t": "抖音生活服务换帅，莫少君接棒浦燕子", "l": "https://wallstreetcn.com/articles/3786179", "s": "华尔街见闻", "p": "11-18 15:30"}]}, "hide": ["2027见闻历，财经人的桌面必备“神历”", "5450亿美元！高盛大幅上调AI项目融资预测，但关键担保人英伟达正在退场", "Humanoid Robots Are Failing Basic Store Trials in China", "“床垫老三”慕思，盯上“床垫老大”喜临门？", "三度跨界并购折戟，金利华电的“第二曲线”在哪里 | 并购一线", "坐拥8500家酒店，温德姆为何还要“借房”？", "机器人女团明年1月出道，具身智能正密集走向舞台", "每月两万五的养老院，为什么依然孤独", "爆火东南亚，薇娅老公投资的公司，年入34亿", "高盛点评英伟达财报：增长前景依然强劲，但要平衡生态输血与股东回报"]};
+/* __PATCHED_V2__ */
+/* 标题归一化：压缩全角/半角空白差异，保证精选匹配与点评查找一致 */
+function normT(s){return String(s==null?'':s).replace(/[\s\u3000]+/g,' ').trim();}
+var HIDES=(BAKED.hide||[]).map(normT);
+var CMAP={};
+Object.keys(BAKED.comments||{}).forEach(function(k){var n=normT(k);if(n&&!CMAP[n])CMAP[n]=BAKED.comments[k];});
+
+function $(s,r){return (r||document).querySelector(s);}
+function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));}
+function esc(s){var d=document.createElement('div');d.textContent=(s==null?'':s);return d.innerHTML;}
+
+/* ---------- 实时层状态 ---------- */
+var liveCount=0, liveFlag=null, liveText=null;
+function markLive(){
+  liveCount++;
+  if(!liveFlag){liveFlag=$('#live-flag');liveText=$('#live-text');}
+  if(liveFlag){liveFlag.classList.remove('off');}
+  if(liveText){liveText.textContent='实时数据已连接';}
+}
+
+/* ---------- 版本指针：发现更新的烘焙版则自动跳转 ---------- */
+var PKEY='db.pointer.v1';
+try{
+  var saved=JSON.parse(localStorage.getItem(PKEY)||'null');
+  if(saved && saved.ts && BAKED.ts && saved.ts>BAKED.ts && saved.url && saved.url!==location.href){
+    location.replace(saved.url); return;
+  }
+  localStorage.setItem(PKEY,JSON.stringify({ts:BAKED.ts||0,url:location.href}));
+}catch(e){}
+
+/* ---------- 实时层：热榜 ---------- */
+function fmtHeat(n){ if(n>=1e8) return (n/1e8).toFixed(1)+'亿'; if(n>=1e4) return (n/1e4).toFixed(1)+'万'; return ''+n; }
+function parseMd(text){
+  var out=[],re=/^\|\s*(\d+)\s*\|\s*\[([^\]]+)\]\(([^)]+)\)\s*\|\s*([\d,\.]+)\s*\|\s*([^|]*?)\s*\|\s*$/;
+  text.split('\n').forEach(function(l){
+    var m=l.trim().match(re); if(!m) return;
+    var n=parseInt(String(m[4]).replace(/,/g,''),10)||0;
+    out.push({rank:+m[1],title:m[2],link:m[3],heat:n,heatText:fmtHeat(n),change:m[5]||'—'});
+  });
+  return out;
+}
+function paintHot(key,items){
+  var sec=$('[data-hot="'+key+'"]'); if(!sec||!items.length) return;
+  var lis=items.map(function(r){
+    var b=r.change, cls=(b==='新'||b==='NEW')?'tag-new':'';
+    return '<li><span class="rank">'+r.rank+'</span><a class="hl" href="'+esc(r.link)+'" target="_blank" rel="noopener">'+esc(r.title)+'</a>'+
+           '<span class="heat">'+esc(r.heatText)+'</span><span class="tag '+cls+'">'+esc(b)+'</span></li>';
+  }).join('');
+  var list=$('.hot-list',sec); if(!list){return;}
+  list.innerHTML=lis;
+  var tg=$('.card-head .tag',sec); if(tg) tg.textContent='TOP '+items.length+' · 实时';
+}
+CFG.hot.forEach(function(src){
+  fetch(src.url,{cache:'no-store'}).then(function(r){return r.text();}).then(function(t){
+    paintHot(src.key,parseMd(t).slice(0,12)); markLive();
+  }).catch(function(){});
+});
+
+/* ---------- 实时层：行情 ---------- */
+function paintMarket(rows){
+  var box=$('[data-news="invest"] .quotes'); if(!box||!rows.length) return;
+  box.innerHTML=rows.map(function(m){
+    var pct=m.pct||0, cls=pct>0?'up':(pct<0?'down':'flat'), ar=pct>0?'▲':(pct<0?'▼':'—');
+    return '<div class="quote '+cls+'"><span class="q-name">'+esc(m.name)+'</span><span class="q-val">'+Number(m.value).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span>'+
+           '<span class="q-pct">'+ar+' '+Math.abs(pct).toFixed(2)+'%</span></div>';
+  }).join('');
+}
+fetch('https://push2.eastmoney.com/api/qt/ulist.np/get?fields=f2,f3,f4,f12,f14&secids='+CFG.market.join(',')+'&fltt=2&invt=2',{cache:'no-store'})
+ .then(function(r){return r.json();}).then(function(d){
+  var rows=((d.data&&d.data.diff)||[]).filter(function(r){return typeof r.f2==='number';})
+    .map(function(r){return {name:r.f14,value:r.f2,pct:r.f3};});
+  paintMarket(rows); markLive();
+ }).catch(function(){});
+
+/* ---------- 实时层：天气 + 规则穿搭 ---------- */
+var WMO={0:'晴',1:'晴间多云',2:'多云',3:'阴',45:'有雾',48:'雾凇',51:'小毛毛雨',53:'毛毛雨',55:'大毛毛雨',61:'小雨',63:'中雨',65:'大雨',71:'小雪',73:'中雪',75:'大雪',80:'阵雨',81:'强阵雨',82:'暴雨',95:'雷阵雨',96:'雷阵雨伴冰雹'};
+function outfit(t,hi,lo,desc,prec,hum){
+  var b=[];
+  if(lo<=5) b.push('羽绒服/厚外套 + 保暖内搭，注意手脚保暖');
+  else if(lo<=12) b.push('风衣/夹克或针织衫 + 长裤，早晚加一件开衫');
+  else if(lo<=20) b.push('薄外套/卫衣 + 长裤，早晚温差大注意叠穿');
+  else if(lo<=26) b.push('短袖/薄长袖即可，备一件薄外套应对空调');
+  else b.push('轻薄透气夏装，注意防晒补水');
+  if(prec) b.push('降水概率 '+prec+'%，记得带伞');
+  if((hi-lo)>=8) b.push('昼夜温差较大，别只按中午温度穿');
+  if(hum>=75) b.push('湿度 '+hum+'% 偏闷，别穿太厚');
+  return desc+'，'+Math.round(lo)+'~'+Math.round(hi)+'°C；建议'+b.join('；')+'。';
+}
+function paintWeather(w){
+  var t=$('.temp'),d=$('.wx-desc'),m=$('.hero-meta'),o=$('.outfit');
+  if(!t) return;
+  t.innerHTML=Math.round(w.temp)+'<span class="deg">°C</span>';
+  if(d) d.textContent=w.day_desc||'';
+  if(m) m.textContent='体感 '+Math.round(w.feels_like)+'° · 湿度 '+w.humidity+'% · '+Math.round(w.low)+'~'+Math.round(w.high)+'°'+(w.precip!=null?' · 降水概率 '+w.precip+'%':'');
+  // 穿搭建议：editorial 已写好就不覆盖，保留 LLM 版本；没有才用规则版兜底
+  if(o && !o.getAttribute('data-editorial')) o.textContent=outfit(w.temp,w.high,w.low,w.day_desc,w.precip,w.humidity);
+}
+fetch('https://api.open-meteo.com/v1/forecast?latitude='+CFG.lat+'&longitude='+CFG.lon+'&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&timezone='+encodeURIComponent(CFG.tz)+'&forecast_days=1',{cache:'no-store'})
+ .then(function(r){return r.json();}).then(function(d){
+  var cur=d.current||{},dy=d.daily||{};
+  paintWeather({temp:cur.temperature_2m,feels_like:cur.apparent_temperature,humidity:cur.relative_humidity_2m,
+    low:(dy.temperature_2m_min||[])[0],high:(dy.temperature_2m_max||[])[0],
+    day_desc:WMO[(dy.weather_code||[])[0]]||'',precip:(dy.precipitation_probability_max||[])[0]});
+  markLive();
+ }).catch(function(){});
+
+/* ---------- 实时层：新闻 RSS（经 rss2json） ---------- */
+var ADWORDS=/(报名|招商|加盟|优惠|促销|抽奖|广告|推广|软文|限时|福利|领取|优惠券|开户|返佣|代理加盟|直播预告|榜单揭晓|神历|白皮书下载|大会|峰会|论坛|开幕|年会|发布会|隆重|圆满|收官|实录)/;
+function paintNews(key,items,site){
+  var sec=$('[data-news="'+key+'"]'); if(!sec||!items.length) return;
+  var box=$('.news-list',sec); if(!box) return;
+  var clean=items.filter(function(it){
+    if(ADWORDS.test(it.title||'')) return false;
+    if(HIDES.indexOf(normT(it.title))>=0) return false;
+    return true;
+  });
+  // editorial 精选为主干：保持顺序与点评；即使已掉出 feed 前 N 条也保留（用烘焙链接兜底）
+  var curated=(BAKED.curated||{})[key]||[];
+  if(curated.length){
+    var byTitle={};
+    clean.forEach(function(it){ var n=normT(it.title); if(!byTitle[n]) byTitle[n]=it; });
+    var ordered=[],used={};
+    curated.forEach(function(c){
+      var n=normT(c.t);
+      if(HIDES.indexOf(n)>=0) return;
+      var it=byTitle[n];
+      if(it){ ordered.push(it); used[normT(it.title)]=1; }
+      else { ordered.push({title:c.t,link:c.l,site:c.s,published:c.p}); }
+    });
+    clean.forEach(function(it){ if(!used[normT(it.title)]) ordered.push(it); });
+    clean=ordered;
+  }
+  box.innerHTML=clean.slice(0,16).map(function(it){
+    var c=CMAP[normT(it.title)];
+    var ch=c?'<p class="comment">'+esc(c)+'</p>':'';
+    return '<article class="news-item"><a class="n-title" href="'+esc(it.link)+'" target="_blank" rel="noopener">'+esc(it.title)+'</a>'+ch+
+      '<div class="meta"><span class="meta-src">'+esc(it.site||site)+'</span><span class="meta-time">'+esc(it.published)+'</span></div></article>';
+  }).join('');
+  var tg=$('.card-head .tag',sec); if(tg) tg.textContent='精选 '+Math.min(clean.length,16)+' 条 · 实时';
+}
+var rssGroups={};
+CFG.rss.forEach(function(src){ (rssGroups[src.key]=rssGroups[src.key]||[]).push(src); });
+Object.keys(rssGroups).forEach(function(key){
+  var srcs=rssGroups[key];
+  Promise.all(srcs.map(function(src){
+    var api='https://api.rss2json.com/v1/api.json?count=12&rss_url='+encodeURIComponent(src.url);
+    return fetch(api,{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+      return (d.items||[]).map(function(it){
+        var p=it.pubDate?new Date(it.pubDate):null;
+        return {title:it.title,link:it.link,site:src.site,
+          published:(p&&!isNaN(p))?(p.getMonth()+1)+'-'+String(p.getDate()).padStart(2,'0')+' '+String(p.getHours()).padStart(2,'0')+':'+String(p.getMinutes()).padStart(2,'0'):''};
+      });
+    }).catch(function(){return [];});
+  })).then(function(lists){
+    var merged=[],idx=0;
+    while(true){ var added=false;
+      for(var i=0;i<lists.length;i++){ if(idx<lists[i].length){merged.push(lists[i][idx]);added=true;} }
+      if(!added) break; idx++;
+    }
+    if(merged.length){ paintNews(key,merged,srcs.map(function(x){return x.site;}).join(' / ')); markLive(); }
+  });
+});
+
+/* ---------- 可选：LLM 点评（用户自带 MiniMax Key，存本地） ---------- */
+var LKEY='db.llmkey.v1',LCACHE='db.llm.v1';
+function llmPanel(){
+  var bar=$('.toolbar');
+  if(!bar) return;
+  var key=''; try{key=localStorage.getItem(LKEY)||'';}catch(e){}
+  bar.innerHTML='<input class="keyinput" id="llm-key" type="password" placeholder="可选：填入你的 MiniMax API Key，启用 AI 点评（仅存本机浏览器）">'+
+    '<button class="btn" id="llm-save">保存 Key</button><button class="btn" id="llm-run">生成 AI 点评</button>'+
+    '<span class="memo-status" id="llm-status"></span>';
+  $('#llm-key').value=key;
+  $('#llm-save').onclick=function(){
+    var v=$('#llm-key').value.trim();
+    try{localStorage.setItem(LKEY,v);}catch(e){}
+    $('#llm-status').textContent=v?'已保存到本机':'已清空';
+    $('#llm-save').classList.toggle('on',!!v);
+  };
+  $('#llm-run').onclick=runLLM;
+  if(key){$('#llm-save').classList.add('on');$('#llm-status').textContent='已启用';}
+}
+async function runLLM(){
+  var st=$('#llm-status'); if(!st) return;
+  var key=''; try{key=localStorage.getItem(LKEY)||'';}catch(e){}
+  if(!key){st.textContent='请先填入并保存 API Key';return;}
+  st.textContent='生成中…';
+  var nodes=$$('[data-news] .news-item');
+  if(!nodes.length){ st.textContent='当前没有可点评的条目'; return; }
+  var titles=nodes.map(function(n,i){return '- ['+i+'] '+(n.querySelector('.n-title')||{}).textContent;}).join('\n');
+  var prompt='以下是今日商业与投资资讯标题列表：\n'+titles+'\n\n请为每条输出一行 JSON，格式为 {"id":"序号数字","c":"不超过30字的中文点评，必须基于标题真实信息，不复述标题，不编造数字"}。只输出 JSON 数组，不要任何其他文字。';
+  try{
+    var body=JSON.stringify({model:'MiniMax-M3.1-Flash',max_tokens:2000,messages:[{role:'user',content:prompt}]});
+    var ends=['https://api.minimaxi.com/anthropic/v1/messages','https://api.minimax.io/anthropic/v1/messages'];
+    var j=null,lastErr=null;
+    for(var i=0;i<ends.length;i++){
+      try{
+        var r=await fetch(ends[i],{method:'POST',headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},body:body});
+        j=await r.json();
+        if(j && j.content) break;
+        lastErr=new Error((j.error&&j.error.message)||('HTTP '+r.status));
+      }catch(err){lastErr=err;}
+    }
+    if(!j||!j.content) throw (lastErr||new Error('接口无返回'));
+    var txt=(j.content&&j.content[0]&&j.content[0].text)||'';
+    var m=txt.match(/\[[\s\S]*\]/);
+    var arr=JSON.parse(m?m[0]:txt);
+    var map={};arr.forEach(function(o){if(o&&o.id!=null)map[String(o.id)]=o.c;});
+    try{localStorage.setItem(LCACHE,JSON.stringify({ts:BAKED.ts||'',map:map}));}catch(e){}
+    applyComments(map); st.textContent='已生成 '+arr.length+' 条点评';
+  }catch(err){ st.textContent='失败：'+err.message; }
+}
+function applyComments(map){
+  $$('[data-news] .news-item').forEach(function(el,i){
+    var c=map[String(i)]; if(!c) return;
+    if(el.querySelector('.comment')) return;
+    var p=document.createElement('p'); p.className='comment'; p.textContent=c;
+    var m=el.querySelector('.meta'); if(m){el.insertBefore(p,m);} else {el.appendChild(p);}
+  });
+}
+try{
+  var cached=JSON.parse(localStorage.getItem(LCACHE)||'null');
+  if(cached&&cached.map) applyComments(cached.map);
+}catch(e){}
+
+/* ---------- 备忘录 ---------- */
+(function(){
+  var key='db.memo.v1',el=$('#memo'),st=$('#memo-status'),t=null;
+  function load(){try{var v=localStorage.getItem(key);if(v){el.value=v;st.textContent='已保存 · '+new Date(v._ts||Date.now()).toLocaleString('zh-CN');}}catch(e){st.textContent='本地存储不可用';}}
+  function save(){try{var v=el.value;v._ts=Date.now();localStorage.setItem(key,v);st.textContent='已自动保存 · '+new Date().toLocaleTimeString('zh-CN');}catch(e){st.textContent='保存失败';}}
+  el.addEventListener('input',function(){clearTimeout(t);t=setTimeout(save,600);});
+  $('#memo-copy').addEventListener('click',function(){el.select();try{navigator.clipboard.writeText(el.value);st.textContent='已复制';}catch(e){document.execCommand('copy');st.textContent='已复制';}});
+  load();
+})();
+
+llmPanel();
+})();
+
+</script>
+</body></html>
