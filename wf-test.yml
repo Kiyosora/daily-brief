@@ -1,0 +1,11 @@
+name: t
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  x:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo hi
