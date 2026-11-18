@@ -1,1 +1,72 @@
-{"probe":1}
+{
+  "city": "上海",
+  "city_lat": 31.2304,
+  "city_lon": 121.4737,
+  "timezone": "Asia/Shanghai",
+  "site_title": "今日简报",
+  "owner": "",
+  "hot_limit": 12,
+  "news_limit": 12,
+  "market_symbols": [
+    "1.000001",
+    "0.399001",
+    "0.399006",
+    "1.000300",
+    "1.000016",
+    "100.HSI",
+    "133.USDCNH"
+  ],
+  "hot_sources": [
+    {
+      "key": "weibo",
+      "name": "微博热搜",
+      "url": "https://dataxapi.com/zh/tools/hot-search/weibo.md"
+    },
+    {
+      "key": "xiaohongshu",
+      "name": "小红书热帖",
+      "url": "https://dataxapi.com/zh/tools/hot-search/xiaohongshu.md"
+    },
+    {
+      "key": "douyin",
+      "name": "抖音热搜",
+      "url": "https://dataxapi.com/zh/tools/hot-search/douyin.md"
+    },
+    {
+      "key": "zhihu",
+      "name": "知乎热榜",
+      "url": "https://dataxapi.com/zh/tools/hot-search/zhihu.md"
+    },
+    {
+      "key": "bilibili",
+      "name": "B站热搜",
+      "url": "https://dataxapi.com/zh/tools/hot-search/bilibili.md"
+    }
+  ],
+  "rss_sources": [
+    {
+      "key": "business",
+      "name": "商业与科技",
+      "url": "https://www.tmtpost.com/feed",
+      "site": "钛媒体"
+    },
+    {
+      "key": "business",
+      "name": "商业与科技",
+      "url": "https://www.qbitai.com/feed",
+      "site": "量子位"
+    },
+    {
+      "key": "business",
+      "name": "商业与科技",
+      "url": "https://www.ifanr.com/feed",
+      "site": "爱范儿"
+    },
+    {
+      "key": "invest",
+      "name": "投资与市场",
+      "url": "https://dedicated.wallstreetcn.com/rss.xml",
+      "site": "华尔街见闻"
+    }
+  ]
+}
