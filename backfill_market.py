@@ -78,7 +78,11 @@ def parse_tencent(text: str, kind: str) -> dict[str, dict]:
         p = payload.split("~")
         if len(p) < 14:
             continue
-        if kind == "fx":
+        # mixed 批量模式必须按代码前缀分流：外汇 wh* 的字段位与指数完全不同
+        k = kind
+        if kind == "mixed":
+            k = "fx" if code.lower().startswith("wh") else "index"
+        if k == "fx":
             value, prev, chg_i, pct_i = f(p[3]), f(p[6]), 12, 13
         else:
             value, prev, chg_i, pct_i = f(p[3]), f(p[4]), 31, 32
@@ -108,7 +112,11 @@ def parse_sina(text: str, kind: str) -> dict[str, dict]:
             continue
         code, payload = m.group(1), m.group(2)
         p = payload.split(",")
-        if kind == "fx":
+        # mixed 批量模式必须按代码前缀分流：fx_* 是外汇字段位，s_* 是指数字段位
+        k = kind
+        if kind == "mixed":
+            k = "fx" if code.lower().startswith("fx_") else "index"
+        if k == "fx":
             if len(p) < 13:
                 continue
             value, prev, pct, chg = f(p[1]), f(p[3]), f(p[10]), f(p[11])

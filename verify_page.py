@@ -8,8 +8,10 @@ with sync_playwright() as p:
     pg = b.new_page(viewport={'width': 1280, 'height': 1200})
     pg.on('console', lambda m: errs.append(f'console.{m.type}: {m.text}') if m.type in ('error','warning') else None)
     pg.on('pageerror', lambda e: errs.append(f'pageerror: {e}'))
-    pg.goto(url, wait_until='networkidle')
-    pg.wait_for_timeout(3500)
+    # 注意：不能用 wait_until='networkidle'——页面实时层的外部请求
+    # （行情接口等）在受限出口里会一直挂着，networkidle 必然 30s 超时。
+    pg.goto(url, wait_until='domcontentloaded')
+    pg.wait_for_timeout(12000)
 
     # 静态层（无 JS 时的首屏内容）
     baked_comments = pg.eval_on_selector_all('.news-item .comment', 'els => els.map(e => e.textContent.trim())')
