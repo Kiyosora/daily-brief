@@ -254,6 +254,10 @@ def main() -> None:
     now = now_cn()
     limit = CONFIG.get("hot_limit", 12)
     nlimit = CONFIG.get("news_limit", 8)
+    # 每个来源抓取深度：与浏览器端实时层 rss2json count=12 对齐
+    depth = 12
+    # 分类候选池上限：静态快照层会按 hide 过滤展示，留出足够挑选空间
+    pool_cap = max(nlimit, 36)
 
     hot: dict[str, list] = {}
     for src in CONFIG["hot_sources"]:
@@ -263,22 +267,55 @@ def main() -> None:
             print(f"[warn] hot {src['key']} failed: {exc}", file=sys.stderr)
             hot[src["key"]] = []
 
+    # 按来源分桶抓取（每个来源都抓满 depth，候选池才有多样性）
     news: dict[str, list] = {"business": [], "invest": []}
+    groups: dict[str, list[list]] = {}
+    by_site: dict[str, list] = {}
     for src in CONFIG["rss_sources"]:
         try:
-            got = parse_rss(fetch(src["url"], timeout=20), src["site"], nlimit)
+            got = parse_rss(fetch(src["url"], timeout=20), src["site"], depth)
         except Exception as exc:
             print(f"[warn] rss {src['site']} failed: {exc}", file=sys.stderr)
             continue
-        bucket = news.setdefault(src["key"], [])
         for item in got:
             # id 用标题哈希，跨轮次稳定（RSS 更新不会让同一��目换 id）
             digest = hashlib.md5(item["title"].encode("utf-8")).hexdigest()[:6]
             item["id"] = f"{src['key'][:2]}{digest}"
-            bucket.append(item)
-    # 每个分类总量封顶，避免卡片过长
-    for key, bucket in news.items():
-        news[key] = bucket[:nlimit]
+        groups.setdefault(src["key"], []).append(got)
+        by_site[src["site"]] = got
+    # 轮转合并各来源：与浏览器端实时层的合并算法保持一致，
+    # 避免首个来源（钛媒体）吃满配额、量子位/爱范儿永远进不了快照层。
+    # 每个分类总量封顶，避免候选池无限膨胀。
+    for key, buckets in groups.items():
+        merged: list = []
+        idx = 0
+        while len(merged) < pool_cap and any(idx < len(b) for b in buckets):
+            for b in buckets:
+                if idx < len(b) and len(merged) < pool_cap:
+                    merged.append(b[idx])
+            idx += 1
+        news[key] = merged
+
+    # 实时层（浏览器端）用 rss2json 读同一批 RSS，它带缓存，可能还留着
+    # 本站直连 feed 已经下架的旧稿。把「实时层有、直连 feed 已无」的标题标成陈旧，
+    # 统一进 hide，免得陈旧或重复稿在实时层里以无点评状态复活。
+    stale_titles: list[str] = []
+    for src in CONFIG["rss_sources"]:
+        fresh = {it["title"] for it in by_site.get(src["site"], [])}
+        if not fresh:
+            continue
+        try:
+            api = ("https://api.rss2json.com/v1/api.json?count=12&rss_url="
+                   + urllib.parse.quote(src["url"], safe=""))
+            req = urllib.request.Request(api, headers={"User-Agent": UA})
+            js = json.loads(urllib.request.urlopen(req, timeout=25).read().decode("utf-8", "ignore"))
+            live = {(i.get("title") or "").strip() for i in (js.get("items") or [])}
+        except Exception as exc:
+            print(f"[warn] rss2json {src['site']} failed: {exc}", file=sys.stderr)
+            continue
+        for t in sorted(live - fresh):
+            if t:
+                stale_titles.append(t)
 
     try:
         weather = collect_weather()
@@ -303,12 +340,14 @@ def main() -> None:
         "hot_meta": {s["key"]: s["name"] for s in CONFIG["hot_sources"]},
         "market": market,
         "news": news,
+        "stale_titles": stale_titles,
     }
 
     out = BASE / "data.json"
     out.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"[ok] data.json written: hot={sum(len(v) for v in hot.values())} "
-          f"news={sum(len(v) for v in news.values())} market={len(market)} weather={'ok' if weather else 'fail'}")
+          f"news={sum(len(v) for v in news.values())} market={len(market)} "
+          f"weather={'ok' if weather else 'fail'} stale={len(stale_titles)}")
 
 
 if __name__ == "__main__":
