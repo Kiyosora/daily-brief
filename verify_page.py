@@ -1,4 +1,4 @@
-import glob, json, os, pathlib, re
+import glob, json, os, pathlib, re, sys
 from playwright.sync_api import sync_playwright
 
 ARGS = ["--no-sandbox", "--disable-dev-shm-usage"]
@@ -30,7 +30,8 @@ def launch_chromium(p):
     raise RuntimeError(f"找不到可用浏览器，尝试过: {cands}")
 
 
-url = pathlib.Path('dist/index.html').resolve().as_uri()
+# 默认验本地快照；传 URL 参数则直接验线上部署站点
+url = sys.argv[1] if len(sys.argv) > 1 else pathlib.Path('dist/index.html').resolve().as_uri()
 errs = []
 with sync_playwright() as p:
     b = launch_chromium(p)
