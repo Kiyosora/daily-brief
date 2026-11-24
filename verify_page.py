@@ -1,4 +1,4 @@
-import glob, json, os, pathlib, re, sys
+import glob, html, json, os, pathlib, re, sys
 from playwright.sync_api import sync_playwright
 
 ARGS = ["--no-sandbox", "--disable-dev-shm-usage"]
@@ -55,17 +55,32 @@ with sync_playwright() as p:
     b.close()
 
 editorial = json.loads(pathlib.Path('editorial.json').read_text(encoding='utf-8'))
-hidden = set(editorial['hide'])
-selected = editorial['order']['business'] + editorial['order']['invest']
+
+
+def norm(s):
+    """归一化 HTML 实体 + 去空白。
+
+    同一篇文章在直连 feed 里是未转义的 'AG&I'，在 rss2json 陈旧稿里是 'AG&amp;I'，
+    两者会同时出现在 selected / hide 中；不归一化会被前缀匹配误判成「泄漏」。
+    """
+    return html.unescape(s or '').strip()
+
+
+hidden_raw = editorial['hide']
+selected_raw = editorial['order']['business'] + editorial['order']['invest']
+selected_norm = {norm(t) for t in selected_raw}
+items_norm = [norm(i) for i in items]
+# 转义变体若与选中项是同一篇，不算泄漏（它本来就是要藏的实时层重复稿）
+hidden = {norm(t) for t in hidden_raw} - selected_norm
 
 print('=== 静态/实时层点评条数 ===', len(baked_comments))
 print('=== 行情 chip ===', quotes)
 print('=== outfit 是否 editorial 版 ===', outfit_editorial, '|', outfit[:40], '...')
 print('=== 隐藏项泄漏检查 ===')
-leaked = [t for t in hidden if any(t[:18] in (i or '') for i in items)]
+leaked = [t for t in hidden if any(t[:18] in i for i in items_norm)]
 print('  泄漏条目:', leaked if leaked else '无 ✅')
 print('=== 选中项是否都在页面 ===')
-missing = [t for t in selected if not any(t[:18] in (i or '') for i in items)]
+missing = [t for t in selected_raw if not any(norm(t)[:18] in i for i in items_norm)]
 print('  缺失:', missing if missing else '全部在页 ✅')
 print('=== JS 报错 ===')
 print('  ', '\n   '.join(errs) if errs else '零报错 ✅')
