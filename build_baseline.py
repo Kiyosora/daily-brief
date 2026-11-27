@@ -1,89 +1,107 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """跨班查重基线构建器。
 
-从 drive 的归档 html 节点里抽出「上一批班次实际展示过的标题」，
-作为本轮选题的重复基线。
+产出 baseline_titles.json，两层结构：
+  · displayed —— 上一批班次【实际展示过】的标题（comments + order），硬红线：
+    命中即不再展示。
+  · pooled    —— 进过候选池但被 hide 的标题，用来判断事件簇饱和度。
 
-cdn_url 由 node_id + 签名 + 可选子目录拼装（避免手抄整串 URL 出错）。
+数据来源（旧的 OSS 预签名 URL 已过期，不要再用）：
+  1) git 历史里所有 revision 的 editorial.json —— comments + order + hide 全量。
+     这是最可靠的一份，仓库本身就是流水线的账本。
+  2) drive 归档 html 的 n-title —— 用 space_download 把 /AI生成/ 递归下载到
+     archives/ 后，正则抽取页面里真实渲染过的标题，补上 git 里没记到的稿子。
+
+用法：
+    cd /workspace/repo && python3 build_baseline.py            # 只用 git 历史
+    python3 build_baseline.py --archives /workspace/brief/archives/ai   # 叠加归档 html
 """
 from __future__ import annotations
 
+import argparse
 import html
 import json
+import pathlib
 import re
 import subprocess
 import sys
-from pathlib import Path
-
-HOST = "https://matrix-internal-cn.oss-cn-shanghai.aliyuncs.com/Mavis/482531219858612224/files"
-FNAME = "%E4%BB%8A%E6%97%A5%E7%AE%80%E6%8A%A5-{date}.html"
-QUERY = "Expires=1795608107&OSSAccessKeyId=LTAI5tD6kjGs53up52CwdPJ3&Signature={sig}"
-
-# (日期, node_id, 子目录或None, 签名)
-ARCHIVES = [
-    ("2026-11-25-12", "467055057740361", "467055057740360", "3kM9wjAA9ahYoFMunQStYkvhOWc%3D"),
-    ("2026-11-25-06", "466965480714560", "466958377119934", "mQn3iXkTdvnyD3Ak7vNsaTeF7GY%3D"),
-    ("2026-11-24-18", "466789207224518", "466789207224517", "5Vm0ZoQSz2VMd86xUfYjNzaF7vI%3D"),
-    ("2026-11-24-12", "466700577288666", "466700577288665", "CWkpWkOErSoZ8%2BXnjVjV6HEozvQ%3D"),
-    ("2026-11-24-06", "466609990537827", "466609990537826", "wqz9vFio%2BUO0y76rIQONxaPN8M4%3D"),
-    ("2026-11-23-18", "466433827275060", "466433827275059", "SyMldJD/lNlMzBYMqFb2HuFAgBM%3D"),
-    ("2026-11-23-12", "466348145267255", None, "gfAznxRQ8o9ikIPKQg%2BWUVPPkcI%3D"),
-    ("2026-11-23-06", "466254768542672", None, "DhvQf%2BCfll9SaR0Hk224OjraeJM%3D"),
-    ("2026-11-22-18", "466079325467366", None, "5H7G9za8H50GjtRIzzx1rIhxoxo%3D"),
-    ("2026-11-22-12", "465991356616983", None, "nO2QU4fK0ejLcxP74tzyrJLUU2Q%3D"),
-    ("2026-11-22-06", "465896824156521", None, "F8N0FCxxHoIumLt2u/zJ3cLy4eo%3D"),
-    ("2026-11-21-18", "465726339133818", None, "Yt/9CFm0TcO5qcbD5Cn0ZJd57ZE%3D"),
-    ("2026-11-21-12", "465638774018597", None, "JrHCLQVe9q4rI2bBrHbyXOWuD6c%3D"),
-    ("2026-11-21-06", "465546724061655", None, "hqEBb40z1U1cT%2BVCGfF4L2eYM7U%3D"),
-    ("2026-11-20-06", "465187686273317", None, "3hPuDsDSZFV1tUt3QJ6KRs%2B3vgI%3D"),
-    ("2026-11-19-18", "465020244357419", None, "3fmJ7G6GvtgQpS1kkF%2BWGul59rI%3D"),
-]
 
 TITLE_RE = re.compile(r'<a class="n-title"[^>]*>(.*?)</a>', re.S)
-OUT = Path(__file__).resolve().parent / "baseline_titles.json"
+REPO = pathlib.Path(__file__).resolve().parent
+OUT = REPO / "baseline_titles.json"
 
 
-def url_for(date: str, node: str, sub: str | None, sig: str) -> str:
-    base = f"{HOST}/{node}" + (f"/{sub}" if sub else "")
-    return f"{base}/{FNAME.format(date=date)}?{QUERY.format(sig=sig)}"
+def git_titles(repo: pathlib.Path) -> tuple[set[str], set[str]]:
+    """从 git 历史里所有 editorial.json 抽标题。
 
-
-def main() -> None:
-    baseline: dict[str, list[str]] = {}
-    failures: list[str] = []
-    for date, node, sub, sig in ARCHIVES:
-        url = url_for(date, node, sub, sig)
-        out = Path(f"/tmp/arch_{date}.html")
+    返回 (displayed, pooled)。
+    """
+    revs = subprocess.run(
+        ["git", "-C", str(repo), "log", "--all", "--format=%H"],
+        capture_output=True, text=True,
+    ).stdout.split()
+    displayed: set[str] = set()
+    pooled: set[str] = set()
+    for sha in revs:
         r = subprocess.run(
-            ["curl", "-sS", "-o", str(out), "-w", "%{http_code}", "--max-time", "40", url],
+            ["git", "-C", str(repo), "show", f"{sha}:editorial.json"],
             capture_output=True, text=True,
         )
-        code = (r.stdout or "").strip()[-3:]
-        size = out.stat().st_size if out.exists() else 0
-        body = out.read_text(encoding="utf-8", errors="ignore") if size else ""
-        if code != "200" or size < 10000 or "SignatureDoesNotMatch" in body:
-            failures.append(f"{date}: http={code} size={size}")
-            print(f"[FAIL] {date}  http={code} size={size}", file=sys.stderr)
+        if r.returncode != 0:
             continue
-        titles = []
+        try:
+            ed = json.loads(r.stdout)
+        except Exception:
+            continue
+        for t in (ed.get("comments") or {}):
+            displayed.add(t)
+            pooled.add(t)
+        for titles in (ed.get("order") or {}).values():
+            displayed.update(titles)
+            pooled.update(titles)
+        pooled.update(ed.get("hide") or [])
+    return displayed, pooled, len(revs)
+
+
+def archive_titles(root: pathlib.Path) -> set[str]:
+    """从归档 html 里抽 n-title（页面真实渲染过的标题）。"""
+    out: set[str] = set()
+    if not root or not root.exists():
+        return out
+    for p in sorted(root.rglob("*.html")):
+        body = p.read_text(encoding="utf-8", errors="ignore")
         for t in TITLE_RE.findall(body):
             t = re.sub(r"<[^>]+>", "", t)
             t = html.unescape(t).strip()
-            # 排除 JS 模板串里的 esc(it.title) 占位
             if not t or "esc(" in t or "it.title" in t:
                 continue
-            titles.append(t)
-        baseline[date] = titles
-        print(f"[ok] {date}  {len(titles)} 条")
+            out.add(t)
+    return out
 
-    allt = [t for v in baseline.values() for t in v]
-    uniq = sorted(set(allt))
-    OUT.write_text(json.dumps({"per_shift": baseline, "all": allt, "uniq": uniq},
-                              ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"\n=== 基线: {len(baseline)} 班 / {len(allt)} 条 / 去重 {len(uniq)} ===")
-    if failures:
-        print(f"[warn] 失败 {len(failures)}: {failures}")
-    print(f"[ok] -> {OUT}")
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--archives", default="", help="归档 html 目录（递归）")
+    ap.add_argument("--repo", default=str(REPO), help="git 仓库目录")
+    args = ap.parse_args()
+
+    repo = pathlib.Path(args.repo)
+    displayed, pooled, nrev = git_titles(repo)
+    print(f"[ok] git 历史 {nrev} 个 revision → displayed {len(displayed)} / pooled {len(pooled)}")
+
+    if args.archives:
+        arch = archive_titles(pathlib.Path(args.archives))
+        displayed |= arch
+        pooled |= arch
+        print(f"[ok] 归档 html 补充 {len(arch)} 条")
+
+    OUT.write_text(
+        json.dumps({"displayed": sorted(displayed), "pooled": sorted(pooled)},
+                   ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    print(f"[ok] -> {OUT.name}（displayed {len(displayed)} / pooled {len(pooled)}）")
 
 
 if __name__ == "__main__":
