@@ -20,7 +20,8 @@ def launch_chromium(p):
     cands = []
     for base in bases:
         if base and os.path.isdir(base):
-            cands += sorted(glob.glob(os.path.join(base, "chromium-*/chrome-linux/chrome")))
+            # 不同 playwright 版本的目录布局不一样：chrome-linux/ 与 chrome-linux64/ 都见过
+            cands += sorted(glob.glob(os.path.join(base, "chromium-*/chrome-linux*/chrome")))
     for c in cands:
         try:
             print(f"[ok] 使用回退浏览器: {c}")
@@ -58,12 +59,15 @@ editorial = json.loads(pathlib.Path('editorial.json').read_text(encoding='utf-8'
 
 
 def norm(s):
-    """归一化 HTML 实体 + 去空白。
+    """归一化 HTML 实体 + 压缩空白。
 
     同一篇文章在直连 feed 里是未转义的 'AG&I'，在 rss2json 陈旧稿里是 'AG&amp;I'，
     两者会同时出现在 selected / hide 中；不归一化会被前缀匹配误判成「泄漏」。
+
+    空白同理：同一条稿在直连 feed 里是单空格、在陈旧稿里是双空格，
+    与 render.py 实时层的 normT 口径保持一致，避免「已展示的那条自己被滤掉」。
     """
-    return html.unescape(s or '').strip()
+    return re.sub(r"[\s\u3000]+", " ", html.unescape(s or "").strip())
 
 
 hidden_raw = editorial['hide']
